@@ -68,10 +68,9 @@
     </bioloid_F3_fixed>
 
     <!-- gripper -->
-    <!-- <dynamixel_AX12_fixed parent="arm_joint4_frame2_link" name="gripper_servo">
+    <dynamixel_AX12_fixed parent="arm_joint4_frame2_link" name="gripper_servo">
       <origin xyz="0.01475 0 ${-AX12_WIDTH/2}" rpy="0 ${M_PI/2} 0"/>
     </dynamixel_AX12_fixed>
-
 
     <joint name="gripper_joint" type="revolute">
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -91,7 +90,7 @@
       <visual>
         <origin xyz=" 0 0 0 " rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://turtlebot_arm_description/meshes/gripper_left.dae" scale="1 1 1"/>
+          <mesh filename="package://turtlebot_arm_description/meshes/gripper_left.dae"/>
         </geometry>
         <material name="${color}"/>
       </visual>
