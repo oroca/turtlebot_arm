@@ -1,0 +1,13 @@
+<launch>
+
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find turtlebot_arm_description)/urdf/arm_4dof.urdf.xacro'" />
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="rob_st_pub" />
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="/use_gui" value="true"/>
+  </node>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot_arm_bringup)/config/arm.rviz" respawn="false" />
+
+</launch>
