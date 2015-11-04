@@ -17,6 +17,7 @@
         <link name="gripper_servo_link" />
         <link name="gripper_active_link" />
         <link name="gripper_mimic_link" />
+        <joint name="gripper_joint" />
     </group>
     <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
     <group_state name="default" group="arm">
@@ -24,19 +25,25 @@
         <joint name="arm_joint2_servo_joint" value="0" />
         <joint name="arm_joint3_frame1_joint" value="0" />
         <joint name="arm_joint4_frame1_joint" value="0" />
-        <joint name="gripper_link_joint" value="0" />
     </group_state>
     <group_state name="forward" group="arm">
         <joint name="arm_joint1_frame1_joint" value="0" />
         <joint name="arm_joint2_servo_joint" value="0" />
         <joint name="arm_joint3_frame1_joint" value="1.5708" />
         <joint name="arm_joint4_frame1_joint" value="0" />
-        <joint name="gripper_link_joint" value="0" />
+    </group_state>
+    <group_state name="close" group="gripper">
+        <joint name="gripper_joint" value="1.25" />
+    </group_state>
+    <group_state name="open" group="gripper">
+        <joint name="gripper_joint" value="0" />
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="gripper" parent_link="gripper_link" group="gripper" />
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
     <virtual_joint name="virtual_joint" type="fixed" parent_frame="base" child_link="base_link" />
+    <!--PASSIVE JOINT: Purpose: this element is used to mark joints that are not actuated-->
+    <passive_joint name="gripper_link_joint" />
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="arm_joint1_frame1_link" link2="arm_joint1_servo_link" reason="Adjacent" />
     <disable_collisions link1="arm_joint1_frame1_link" link2="arm_joint2_frame1_link" reason="Never" />

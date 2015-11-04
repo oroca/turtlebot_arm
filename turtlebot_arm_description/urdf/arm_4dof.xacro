@@ -70,8 +70,8 @@
 
     <!-- gripper link joint (fake) -->
     <joint name="gripper_link_joint" type="revolute">
-      <origin xyz="-0.005 0 -0.06" rpy="0 0 0" />
-      <parent link="arm_joint4_frame2_link"/>
+      <origin xyz="0 0 0.1" rpy="0 -1.57 0" />
+      <parent link="arm_joint4_frame1_link"/>
       <child link="gripper_link" />
       <limit effort="30" velocity="1" lower="${-M_PI}" upper="${M_PI}"/>
       <axis xyz="1 0 0"/>
@@ -118,7 +118,7 @@
       <mimic joint="gripper_joint" multiplier="-1.0" offset="0"/>
       <origin xyz="0 0 -0.04" rpy="0 0 0"/>
       <axis xyz="0 1 0"/>
-      <limit effort="30" velocity="0.785" lower="-0.40" upper="1.27" />
+      <limit effort="30" velocity="0.785" lower="-1.27" upper="0.40" />
       <parent link="gripper_servo_link"/>
       <child link="gripper_mimic_link"/>
     </joint>

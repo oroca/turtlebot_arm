@@ -8,5 +8,5 @@ controller_list:
       - gripper_link_joint
   - name: fake_gripper_controller
     joints:
-      - gripper_link_joint
       - gripper_joint
+      - gripper_link_joint
