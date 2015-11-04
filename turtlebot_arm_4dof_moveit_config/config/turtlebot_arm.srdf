@@ -10,8 +10,33 @@
     <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
     <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
     <group name="arm">
-        <chain base_link="base_link" tip_link="arm_joint4_frame2_link" />
+        <chain base_link="arm_base_link" tip_link="gripper_link" />
     </group>
+    <group name="gripper">
+        <link name="gripper_link" />
+        <link name="gripper_servo_link" />
+        <link name="gripper_active_link" />
+        <link name="gripper_mimic_link" />
+    </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="default" group="arm">
+        <joint name="arm_joint1_frame1_joint" value="0" />
+        <joint name="arm_joint2_servo_joint" value="0" />
+        <joint name="arm_joint3_frame1_joint" value="0" />
+        <joint name="arm_joint4_frame1_joint" value="0" />
+        <joint name="gripper_link_joint" value="0" />
+    </group_state>
+    <group_state name="forward" group="arm">
+        <joint name="arm_joint1_frame1_joint" value="0" />
+        <joint name="arm_joint2_servo_joint" value="0" />
+        <joint name="arm_joint3_frame1_joint" value="1.5708" />
+        <joint name="arm_joint4_frame1_joint" value="0" />
+        <joint name="gripper_link_joint" value="0" />
+    </group_state>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="gripper" parent_link="gripper_link" group="gripper" />
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+    <virtual_joint name="virtual_joint" type="fixed" parent_frame="base" child_link="base_link" />
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="arm_joint1_frame1_link" link2="arm_joint1_servo_link" reason="Adjacent" />
     <disable_collisions link1="arm_joint1_frame1_link" link2="arm_joint2_frame1_link" reason="Never" />
@@ -33,6 +58,7 @@
     <disable_collisions link1="arm_joint2_frame1_link" link2="arm_joint4_frame2_link" reason="Never" />
     <disable_collisions link1="arm_joint2_frame1_link" link2="arm_joint4_servo_link" reason="Never" />
     <disable_collisions link1="arm_joint2_frame1_link" link2="gripper_active_link" reason="Never" />
+    <disable_collisions link1="arm_joint2_frame1_link" link2="gripper_mimic_link" reason="Never" />
     <disable_collisions link1="arm_joint2_frame1_link" link2="gripper_servo_link" reason="Never" />
     <disable_collisions link1="arm_joint2_frame2_link" link2="arm_joint2_servo_link" reason="Never" />
     <disable_collisions link1="arm_joint2_frame2_link" link2="arm_joint3_frame2_link" reason="Never" />
@@ -41,6 +67,7 @@
     <disable_collisions link1="arm_joint2_frame2_link" link2="arm_joint4_frame2_link" reason="Never" />
     <disable_collisions link1="arm_joint2_frame2_link" link2="arm_joint4_servo_link" reason="Never" />
     <disable_collisions link1="arm_joint2_frame2_link" link2="gripper_active_link" reason="Never" />
+    <disable_collisions link1="arm_joint2_frame2_link" link2="gripper_mimic_link" reason="Never" />
     <disable_collisions link1="arm_joint2_frame2_link" link2="gripper_servo_link" reason="Never" />
     <disable_collisions link1="arm_joint2_servo_link" link2="arm_joint3_frame2_link" reason="Never" />
     <disable_collisions link1="arm_joint2_servo_link" link2="arm_joint3_servo_link" reason="Never" />
@@ -52,26 +79,34 @@
     <disable_collisions link1="arm_joint3_frame1_link" link2="arm_joint4_frame2_link" reason="Never" />
     <disable_collisions link1="arm_joint3_frame1_link" link2="arm_joint4_servo_link" reason="Never" />
     <disable_collisions link1="arm_joint3_frame1_link" link2="gripper_active_link" reason="Never" />
+    <disable_collisions link1="arm_joint3_frame1_link" link2="gripper_mimic_link" reason="Never" />
     <disable_collisions link1="arm_joint3_frame1_link" link2="gripper_servo_link" reason="Never" />
     <disable_collisions link1="arm_joint3_frame2_link" link2="arm_joint3_servo_link" reason="Never" />
     <disable_collisions link1="arm_joint3_frame2_link" link2="arm_joint4_frame1_link" reason="Never" />
     <disable_collisions link1="arm_joint3_frame2_link" link2="arm_joint4_frame2_link" reason="Never" />
     <disable_collisions link1="arm_joint3_frame2_link" link2="arm_joint4_servo_link" reason="Adjacent" />
     <disable_collisions link1="arm_joint3_frame2_link" link2="gripper_active_link" reason="Never" />
+    <disable_collisions link1="arm_joint3_frame2_link" link2="gripper_mimic_link" reason="Never" />
     <disable_collisions link1="arm_joint3_frame2_link" link2="gripper_servo_link" reason="Never" />
     <disable_collisions link1="arm_joint3_servo_link" link2="arm_joint4_frame1_link" reason="Never" />
     <disable_collisions link1="arm_joint3_servo_link" link2="arm_joint4_frame2_link" reason="Never" />
     <disable_collisions link1="arm_joint3_servo_link" link2="arm_joint4_servo_link" reason="Never" />
     <disable_collisions link1="arm_joint3_servo_link" link2="gripper_active_link" reason="Never" />
+    <disable_collisions link1="arm_joint3_servo_link" link2="gripper_mimic_link" reason="Never" />
     <disable_collisions link1="arm_joint3_servo_link" link2="gripper_servo_link" reason="Never" />
     <disable_collisions link1="arm_joint4_frame1_link" link2="arm_joint4_frame2_link" reason="Adjacent" />
     <disable_collisions link1="arm_joint4_frame1_link" link2="arm_joint4_servo_link" reason="Adjacent" />
     <disable_collisions link1="arm_joint4_frame1_link" link2="gripper_active_link" reason="Never" />
+    <disable_collisions link1="arm_joint4_frame1_link" link2="gripper_mimic_link" reason="Never" />
     <disable_collisions link1="arm_joint4_frame1_link" link2="gripper_servo_link" reason="Never" />
     <disable_collisions link1="arm_joint4_frame2_link" link2="arm_joint4_servo_link" reason="Never" />
     <disable_collisions link1="arm_joint4_frame2_link" link2="gripper_active_link" reason="Default" />
+    <disable_collisions link1="arm_joint4_frame2_link" link2="gripper_mimic_link" reason="Never" />
     <disable_collisions link1="arm_joint4_frame2_link" link2="gripper_servo_link" reason="Adjacent" />
     <disable_collisions link1="arm_joint4_servo_link" link2="gripper_active_link" reason="Never" />
+    <disable_collisions link1="arm_joint4_servo_link" link2="gripper_mimic_link" reason="Never" />
     <disable_collisions link1="arm_joint4_servo_link" link2="gripper_servo_link" reason="Never" />
+    <disable_collisions link1="gripper_active_link" link2="gripper_mimic_link" reason="Never" />
     <disable_collisions link1="gripper_active_link" link2="gripper_servo_link" reason="Adjacent" />
+    <disable_collisions link1="gripper_mimic_link" link2="gripper_servo_link" reason="Adjacent" />
 </robot>

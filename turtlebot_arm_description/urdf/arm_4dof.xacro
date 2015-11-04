@@ -68,6 +68,17 @@
       <origin xyz="0 0.008 ${F2_HEIGHT}" rpy="0 ${M_PI} ${-M_PI/2}" />
     </bioloid_F3_fixed>
 
+    <!-- gripper link joint (fake) -->
+    <joint name="gripper_link_joint" type="revolute">
+      <origin xyz="-0.005 0 -0.06" rpy="0 0 0" />
+      <parent link="arm_joint4_frame2_link"/>
+      <child link="gripper_link" />
+      <limit effort="30" velocity="1" lower="${-M_PI}" upper="${M_PI}"/>
+      <axis xyz="1 0 0"/>
+    </joint>
+
+    <link name="gripper_link" />
+
     <!-- gripper -->
     <dynamixel_AX12_fixed parent="arm_joint4_frame2_link" name="gripper_servo">
       <origin xyz="0.01475 0 ${-AX12_WIDTH/2}" rpy="0 ${M_PI/2} 0"/>
