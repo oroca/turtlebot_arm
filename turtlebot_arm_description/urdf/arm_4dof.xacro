@@ -75,20 +75,21 @@
     <joint name="gripper_joint" type="revolute">
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <axis xyz="0 1 0"/>
-      <limit effort="30" velocity="0.785" lower="-0.40" upper="0.46" />
+      <limit effort="30" velocity="0.785" lower="-0.40" upper="1.27" />
       <parent link="gripper_servo_link"/>
       <child link="gripper_active_link" />
     </joint>
+
     <link name="gripper_active_link">
       <inertial>
         <mass value="0.00001" />
         <origin xyz="0 0 0" />
         <inertia ixx="1.0" ixy="0.0" ixz="0.0"
-          iyy="1.0" iyz="0.0"
-          izz="1.0" />
+                           iyy="1.0" iyz="0.0"
+                                     izz="1.0" />
       </inertial>
       <visual>
-        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <origin xyz=" 0 0 0 " rpy="${-M_PI/2} 0 0" />
         <geometry>
           <mesh filename="package://turtlebot_arm_description/meshes/gripper_left.dae"/>
         </geometry>
@@ -100,7 +101,39 @@
           <box size="0.025 0.0485 0.0375"/>
         </geometry>
       </collision>
-    </link> -->
+    </link>
+
+    <joint name="gripper_mimic_joint" type="revolute">
+      <mimic joint="gripper_joint" multiplier="-1.0" offset="0"/>
+      <origin xyz="0 0 -0.04" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="30" velocity="0.785" lower="-0.40" upper="1.27" />
+      <parent link="gripper_servo_link"/>
+      <child link="gripper_mimic_link"/>
+    </joint>
+
+    <link name="gripper_mimic_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+                           iyy="1.0" iyz="0.0"
+                                     izz="1.0" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="${-M_PI/2} 0 0" />
+        <geometry>
+          <mesh filename="package://turtlebot_arm_description/meshes/gripper_right.dae"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.00775" rpy="0 0 0" />
+        <geometry>
+          <box size="0.025 0.0485 0.0375"/>
+        </geometry>
+      </collision>
+    </link>
 
   </xacro:macro>
 </robot>
