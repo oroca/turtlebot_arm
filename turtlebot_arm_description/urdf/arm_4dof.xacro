@@ -16,6 +16,7 @@
   <xacro:macro name="turtlebot_arm" params="parent color gripper_color *origin
                                             joints_vlimit pan_llimit pan_ulimit">
     <link name="arm_base_link" />
+
     <joint name="arm_base_joint" type="fixed">
       <insert_block name="origin" />
       <parent link="${parent}"/>
@@ -24,7 +25,7 @@
 
     <!-- shoulder pan joint -->
     <dynamixel_AX12_fixed parent="arm_base_link" name="arm_joint1_servo">
-      <origin xyz="0 0 0" rpy="${M_PI/2} 0 ${M_PI/2}"/>
+      <origin xyz="0 0 ${AX12_WIDTH/2}" rpy="${M_PI/2} 0 ${M_PI/2}"/>
     </dynamixel_AX12_fixed>
     <bioloid_F2_pan_revolute parent="arm_joint1_servo_link" name="arm_joint1_frame1" color="${color}"
                          vlimit="${joints_vlimit}" llimit="${pan_llimit}" ulimit="${pan_ulimit}">
@@ -93,12 +94,11 @@
         <geometry>
           <mesh filename="package://turtlebot_arm_description/meshes/gripper_left.dae"/>
         </geometry>
-        <material name="${color}"/>
       </visual>
       <collision>
-        <origin xyz="0.0 0.0 0.00775" rpy="0 0 0" />
+        <origin xyz="0.0 0.0 0.02" rpy="0 0 0" />
         <geometry>
-          <box size="0.025 0.0485 0.0375"/>
+          <box size="0.025 0.048 0.06"/>
         </geometry>
       </collision>
     </link>
@@ -125,12 +125,11 @@
         <geometry>
           <mesh filename="package://turtlebot_arm_description/meshes/gripper_right.dae"/>
         </geometry>
-        <material name="${color}"/>
       </visual>
       <collision>
-        <origin xyz="0.0 0.0 0.00775" rpy="0 0 0" />
+        <origin xyz="0.0 0.0 -0.02" rpy="0 0 0" />
         <geometry>
-          <box size="0.025 0.0485 0.0375"/>
+          <box size="0.025 0.048 0.06"/>
         </geometry>
       </collision>
     </link>
