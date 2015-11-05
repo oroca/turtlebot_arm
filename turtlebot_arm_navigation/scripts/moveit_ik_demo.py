@@ -39,6 +39,9 @@ GRIPPER_JOINT_NAMES = ['gripper_joint']
 GRIPPER_OPEN = [-0.2, 0, 0]
 GRIPPER_CLOSED = [1.25, 0, 0]
 GRIPPER_NEUTRAL = [0.0, 0, 0]
+# GRIPPER_OPEN = [-0.2]
+# GRIPPER_CLOSED = [1.25]
+# GRIPPER_NEUTRAL = [0.0]
 
 GRIPPER_EFFORT = [1.0]
 
@@ -56,8 +59,8 @@ class MoveItIKDemo:
         end_effector_link = arm.get_end_effector_link()
 
         # Set a goal joint tolerance
-        arm.set_goal_joint_tolerance(0.001)
-        gripper.set_goal_joint_tolerance(0.001)
+        arm.set_goal_joint_tolerance(0.04)
+        gripper.set_goal_joint_tolerance(0.1)
 
         # Set the option related IK solution
         arm.allow_replanning(True)
@@ -66,13 +69,19 @@ class MoveItIKDemo:
         # 1. Set the target pose
         # 2. Plan a trajectory
         # 3. Execute the planned trajectory
-        arm.set_named_target('default')
+        # arm.set_named_target('default')
+        # arm.go()
+        # rospy.sleep(3)
+
+        # Use the joint positions with FK
+        joint_positions = [0.1, 0.1, 0.1, 0.1, 0.0]
+        arm.set_joint_value_target(joint_positions)
         arm.go()
-        rospy.sleep(1)
+        rospy.sleep(3)
 
         gripper.set_joint_value_target(GRIPPER_NEUTRAL)
         gripper.go()
-        rospy.sleep(1)
+        rospy.sleep(3)
 
         # Use the joint pose with IK
         # 1. Set the target pose for IK
@@ -91,16 +100,16 @@ class MoveItIKDemo:
         target_pose.pose.orientation.z = 0.707
         target_pose.pose.orientation.w = 0.707
 
-        arm.set_start_state_to_current_state()
+        # arm.set_start_state_to_current_state()
         arm.set_pose_target(target_pose, end_effector_link)
         traj = arm.plan()
         arm.execute(traj)
-        rospy.sleep(1)
+        rospy.sleep(3)
 
         # Grasp
         gripper.set_joint_value_target(GRIPPER_CLOSED)
         gripper.go()
-        rospy.sleep(1)
+        rospy.sleep(3)
 
         # Move the arm to right side
         target_pose.header.stamp = rospy.Time.now()
@@ -111,26 +120,27 @@ class MoveItIKDemo:
         target_pose.pose.orientation.y = 0.0
         target_pose.pose.orientation.z = -0.707
         target_pose.pose.orientation.w =  0.707
-        arm.set_start_state_to_current_state()
+
+        # arm.set_start_state_to_current_state()
         arm.set_pose_target(target_pose, end_effector_link)
         traj = arm.plan()
         arm.execute(traj)
-        rospy.sleep(1)
+        rospy.sleep(3)
 
         # Place
         gripper.set_joint_value_target(GRIPPER_OPEN)
         gripper.go()
-        rospy.sleep(1)
+        rospy.sleep(3)
 
-        # Return
-        arm.set_named_target('default')
-        traj = arm.plan()
-        arm.execute(traj)
-        rospy.sleep(1)
+        # Use the joint positions with FK
+        joint_positions = [0.1, 0.1, 0.1, 0.1, 0.0]
+        arm.set_joint_value_target(joint_positions)
+        arm.go()
+        rospy.sleep(3)
 
-        gripper.set_joint_value_target(GRIPPER_NEUTRAL)
+        gripper.set_joint_value_target(GRIPPER_CLOSED)
         gripper.go()
-        rospy.sleep(1)
+        rospy.sleep(3)
 
         # Cleanly shut down MoveIt
         moveit_commander.roscpp_shutdown()

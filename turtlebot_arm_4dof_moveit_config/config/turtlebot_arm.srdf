@@ -38,6 +38,13 @@
     <group_state name="open" group="gripper">
         <joint name="gripper_joint" value="0" />
     </group_state>
+    <group_state name="test" group="arm">
+        <joint name="arm_joint1_frame1_joint" value="-1.5708" />
+        <joint name="arm_joint2_servo_joint" value="-1.5708" />
+        <joint name="arm_joint3_frame1_joint" value="-1.5708" />
+        <joint name="arm_joint4_frame1_joint" value="1.5708" />
+        <joint name="gripper_link_joint" value="0" />
+    </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="gripper" parent_link="gripper_link" group="gripper" />
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->

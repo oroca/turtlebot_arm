@@ -49,34 +49,34 @@ class MoveItFKDemo:
         arm.set_named_target('default')
         traj = arm.plan()
         arm.execute(traj)
-        rospy.sleep(1)
+        rospy.sleep(5)
 
         gripper.set_named_target('open')
         gripper.go()
-        rospy.sleep(1)
+        rospy.sleep(5)
 
         # Use the joint positions with FK
         # 1. Set the target joint values
         # 2. Plan a trajectory
         # 3. Execute the planned trajectory
-        joint_positions = [0.0, 1.5707, -1.5707, 1.5707, 0.0]
+        joint_positions = [0.1, -1.5707, -1.5707, 1.5707, 0.0]
         arm.set_joint_value_target(joint_positions)
         arm.go()
-        rospy.sleep(1)
+        rospy.sleep(5)
 
         gripper.set_named_target('close')
         gripper.go()
-        rospy.sleep(1)
+        rospy.sleep(5)
 
         # Return
         arm.set_named_target('default')
         traj = arm.plan()
         arm.execute(traj)
-        rospy.sleep(1)
+        rospy.sleep(5)
 
         gripper.set_named_target('open')
         gripper.go()
-        rospy.sleep(1)
+        rospy.sleep(5)
 
         # Cleanly shut down MoveIt
         moveit_commander.roscpp_shutdown()
