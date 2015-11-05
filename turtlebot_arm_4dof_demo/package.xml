@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>turtlebot_arm_navigation</name>
+  <name>turtlebot_arm_4dof_demo</name>
   <version>0.0.1</version>
-  <description>The turtlebot_arm_navigation package</description>
+  <description>The turtlebot_arm_4dof_demo package</description>
 
   <maintainer email="passionvirus@gmail.com">Yoonseok Pyo</maintainer>
 
