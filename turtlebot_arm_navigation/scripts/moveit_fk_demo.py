@@ -6,7 +6,6 @@
     Use forward kinemtatics to move the arm to a specified set of joint angles
 
     Copyright 2014 by Patrick Goebel <patrick@pirobot.org, www.pirobot.org>
-    Copyright 2015 by YS Pyo <passionvirus@gmail.com>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,6 +27,10 @@ from control_msgs.msg import GripperCommand
 GROUP_NAME_ARM = 'arm'
 GROUP_NAME_GRIPPER = 'gripper'
 
+GRIPPER_OPEN = [-0.2, 0, 0]
+GRIPPER_CLOSED = [1.25, 0, 0]
+GRIPPER_NEUTRAL = [0.0, 0, 0]
+
 class MoveItFKDemo:
     def __init__(self):
         # Initialize the move_group API and node
@@ -39,43 +42,34 @@ class MoveItFKDemo:
         gripper = moveit_commander.MoveGroupCommander(GROUP_NAME_GRIPPER)
 
         # Set a goal joint tolerance
-        arm.set_goal_joint_tolerance(0.001)
-        gripper.set_goal_joint_tolerance(0.001)
-
-        # Use the pose stored in the SRDF file
-        # 1. Set the target pose
-        # 2. Plan a trajectory
-        # 3. Execute the planned trajectory
-        arm.set_named_target('default')
-        traj = arm.plan()
-        arm.execute(traj)
-        rospy.sleep(5)
-
-        gripper.set_named_target('open')
-        gripper.go()
-        rospy.sleep(5)
+        arm.set_goal_joint_tolerance(0.04)
+        gripper.set_goal_joint_tolerance(0.1)
 
         # Use the joint positions with FK
         # 1. Set the target joint values
         # 2. Plan a trajectory
         # 3. Execute the planned trajectory
+        joint_positions = [0.0, 0.0, 0.0, 0.0, 0.0]
+        arm.set_joint_value_target(joint_positions)
+        arm.go()
+        rospy.sleep(3)
+
+        gripper.set_joint_value_target(GRIPPER_OPEN)
+        gripper.go()
+        rospy.sleep(3)
+
         joint_positions = [0.1, -1.5707, -1.5707, 1.5707, 0.0]
         arm.set_joint_value_target(joint_positions)
         arm.go()
         rospy.sleep(5)
 
-        gripper.set_named_target('close')
+        gripper.set_joint_value_target(GRIPPER_CLOSED)
         gripper.go()
         rospy.sleep(5)
 
-        # Return
-        arm.set_named_target('default')
-        traj = arm.plan()
-        arm.execute(traj)
-        rospy.sleep(5)
-
-        gripper.set_named_target('open')
-        gripper.go()
+        joint_positions = [0.0, 0.0, 0.0, 1.5707, 0.0]
+        arm.set_joint_value_target(joint_positions)
+        arm.go()
         rospy.sleep(5)
 
         # Cleanly shut down MoveIt

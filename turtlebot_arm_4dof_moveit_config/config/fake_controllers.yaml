@@ -9,3 +9,5 @@ controller_list:
   - name: fake_gripper_controller
     joints:
       - gripper_joint
+      - gripper_mimic_joint
+      - gripper_link_joint
