@@ -37,7 +37,7 @@ class MoveItFKDemo:
         moveit_commander.roscpp_initialize(sys.argv)
         rospy.init_node('moveit_fk_demo', anonymous=True)
 
-        # Use the groups of SmartPal5
+        # Use the groups of arm and gripper
         arm = moveit_commander.MoveGroupCommander(GROUP_NAME_ARM)
         gripper = moveit_commander.MoveGroupCommander(GROUP_NAME_GRIPPER)
 
